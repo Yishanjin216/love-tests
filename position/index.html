@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>测测你在恋爱关系中占什么地位</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{margin:0;padding:0;}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:linear-gradient(180deg,#FBF6FF 0%,#F4EBF7 55%,#EFE6F4 100%);
+  min-height:100vh;color:#3A3230;
+  display:flex;align-items:center;justify-content:center;
+  padding:24px 18px;
+}
+#app{width:100%;max-width:400px;}
+.screen{display:none;animation:fade .35s ease;}
+.screen.active{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+.cover{text-align:center;padding:36px 8px 24px;}
+.cover .kicker{font-size:12px;letter-spacing:3px;color:#AE9BC0;margin-bottom:18px;}
+.cover h1{font-family:"Songti SC",Georgia,serif;font-size:29px;line-height:1.5;margin:0 0 14px;font-weight:600;color:#41364A;}
+.cover p{font-size:13px;color:#8B7C96;line-height:1.9;margin:0 0 32px;}
+
+.btn{
+  display:block;width:100%;border:none;border-radius:999px;
+  padding:16px;font-size:16px;font-weight:500;color:#fff;
+  background:linear-gradient(135deg,#A98BD0,#7E63A8);
+  box-shadow:0 8px 20px rgba(126,99,168,.28);
+  cursor:pointer;font-family:inherit;transition:transform .15s ease;
+}
+.btn:active{transform:scale(.97)}
+.meta{margin-top:14px;font-size:11px;color:#B3A6BE;letter-spacing:.5px;}
+
+.q-head{display:flex;justify-content:space-between;font-size:12px;color:#A798B2;margin-bottom:10px;}
+.bar{height:4px;background:#EDE4F2;border-radius:99px;overflow:hidden;margin-bottom:34px;}
+.bar span{display:block;height:100%;width:0;background:linear-gradient(90deg,#BB9BDD,#7E63A8);border-radius:99px;transition:width .3s ease;}
+.q-text{font-family:"Songti SC",Georgia,serif;font-size:21px;line-height:1.65;margin:0 0 30px;color:#3E344A;}
+.opt{
+  display:block;width:100%;text-align:left;border:1px solid #E9DFF0;background:#fff;
+  border-radius:18px;padding:18px 20px;font-size:15px;line-height:1.6;color:#463C50;
+  margin-bottom:14px;cursor:pointer;font-family:inherit;
+  box-shadow:0 2px 10px rgba(160,140,180,.07);transition:all .16s ease;
+}
+.opt:active{transform:scale(.985);border-color:#CDB6E2;background:#FCFAFF;}
+
+.card{
+  border-radius:24px;padding:32px 26px 26px;color:#fff;
+  box-shadow:0 14px 34px rgba(100,80,120,.22);
+  position:relative;overflow:hidden;
+  min-height:560px;display:flex;flex-direction:column;
+}
+.card:before{content:"";position:absolute;left:-20%;right:-20%;top:-70px;height:180px;background:rgba(255,255,255,.13);transform:rotate(-7deg);}
+.card .badge{
+  display:inline-block;font-size:11px;letter-spacing:2px;padding:5px 12px;
+  border:1px solid rgba(255,255,255,.5);border-radius:99px;margin-bottom:18px;
+  position:relative;opacity:.95;
+}
+.card .icon{font-size:32px;margin-bottom:12px;position:relative;}
+.card .tname{font-family:"Songti SC",Georgia,serif;font-size:29px;font-weight:600;letter-spacing:2px;margin:0 0 8px;position:relative;}
+.card .tag{font-size:13px;opacity:.9;letter-spacing:1px;margin-bottom:20px;position:relative;}
+.card .core{font-size:14px;line-height:1.95;opacity:.96;padding:15px 0;border-top:1px solid rgba(255,255,255,.28);border-bottom:1px solid rgba(255,255,255,.28);margin-bottom:18px;position:relative;}
+.card .traits{list-style:none;padding:0;margin:0 0 20px;position:relative;}
+.card .traits li{font-size:13.5px;line-height:2.05;opacity:.95;}
+.card .traits li:before{content:"·";margin-right:10px;opacity:.7;}
+.card .need{font-size:13.5px;line-height:1.9;opacity:.96;position:relative;margin-top:auto;}
+.card .need b{font-weight:600;}
+.card .wm{position:absolute;right:24px;bottom:18px;font-size:10px;opacity:.55;letter-spacing:1px;}
+
+.hint{font-size:11.5px;color:#A798B2;text-align:center;margin:14px 0 22px;letter-spacing:.5px;}
+.report{background:#fff;border-radius:20px;padding:8px 22px 22px;box-shadow:0 6px 22px rgba(160,140,180,.10);}
+.rp-head{
+  font-family:"Songti SC",Georgia,serif;font-size:15px;color:#41364A;font-weight:600;
+  padding:18px 0 4px;letter-spacing:1px;
+}
+.rp-block{padding:16px 0;border-top:1px solid #F1EAF5;}
+.rp-block:first-of-type{border-top:none;}
+.rp-block h4{margin:0 0 9px;font-size:13px;color:#7E63A8;font-weight:600;letter-spacing:.5px;}
+.rp-block p{margin:0;font-size:13.5px;line-height:2;color:#5A5063;}
+.rp-block ul{list-style:none;padding:0;margin:0;}
+.rp-block li{font-size:13.5px;line-height:2;color:#5A5063;padding-left:16px;position:relative;}
+.rp-block li:before{content:"·";position:absolute;left:2px;color:#B79BD8;}
+.ghost{display:block;width:100%;text-align:center;background:none;border:none;color:#A798B2;font-size:13px;padding:22px 0 0;cursor:pointer;font-family:inherit;}
+.toast{
+  position:fixed;left:50%;bottom:40px;transform:translate(-50%,16px);
+  background:rgba(58,50,48,.92);color:#fff;font-size:13px;line-height:1.6;
+  padding:12px 20px;border-radius:14px;opacity:0;pointer-events:none;
+  transition:all .25s ease;max-width:80vw;text-align:center;z-index:9;
+}
+.toast.show{opacity:1;transform:translate(-50%,0);}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <section id="s-cover" class="screen active">
+    <div class="cover">
+      <div class="kicker">RELATIONSHIP POSITION</div>
+      <h1>测测你在恋爱关系中<br>占什么地位</h1>
+      <p>你以为你在的位置，<br>和你实际站的位置，<br>常常不是同一个。</p>
+      <button class="btn" id="start">开始测试</button>
+      <div class="meta">12 题 · 约 1 分钟 · 12 种结果</div>
+    </div>
+  </section>
+
+  <section id="s-q" class="screen">
+    <div class="q-head"><span id="q-idx">01 / 12</span><span>凭直觉选</span></div>
+    <div class="bar"><span id="q-bar"></span></div>
+    <h2 class="q-text" id="q-text"></h2>
+    <div id="q-opts"></div>
+  </section>
+
+  <section id="s-result" class="screen">
+    <div class="card" id="card">
+      <div class="badge" id="r-badge"></div>
+      <div class="icon" id="r-icon"></div>
+      <h2 class="tname" id="r-name"></h2>
+      <div class="tag" id="r-tag"></div>
+      <div class="core" id="r-core"></div>
+      <ul class="traits" id="r-traits"></ul>
+      <div class="need" id="r-need"></div>
+      <div class="wm">恋爱地位测试</div>
+    </div>
+    <div class="hint">截图保存，它就是你的结果卡</div>
+
+    <div class="report">
+      <div class="rp-head">完整报告</div>
+
+      <div class="rp-block">
+        <h4>为什么你会站在这个位置</h4>
+        <p id="rp-why"></p>
+      </div>
+
+      <div class="rp-block">
+        <h4>你的 3 个惯性动作</h4>
+        <ul id="rp-signals"></ul>
+      </div>
+
+      <div class="rp-block">
+        <h4>想往上走一步</h4>
+        <ul id="rp-move"></ul>
+      </div>
+
+      <div class="rp-block">
+        <h4>什么样的关系最适合你</h4>
+        <p id="rp-fit"></p>
+      </div>
+    </div>
+
+    <button class="ghost" id="again">重新测一次</button>
+  </section>
+
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* k = 风格：zhi 清醒 / huo 热烈 / shui 温柔 / feng 自持
+   p = 位置分：1 你定节奏  0 你退一步 */
+const QUESTIONS = [
+  {q:'他忘记了你们的纪念日。',
+   a:{t:'先不发作，等他什么时候自己想起来',k:'zhi',p:1},
+   b:{t:'气了一整天，最后还是没有提',k:'huo',p:0}},
+  {q:'他临时说今晚有局，不来了。',
+   a:{t:'没事，你去吧',k:'shui',p:0},
+   b:{t:'好，那我今晚也自己安排',k:'feng',p:1}},
+  {q:'你发现他手机里有个聊得挺多的女生。',
+   a:{t:'直接问，我在意就当面说清楚',k:'huo',p:1},
+   b:{t:'先不动，自己观察一阵',k:'zhi',p:0}},
+  {q:'吵架后冷了两天。',
+   a:{t:'我照常过我的，等他想明白',k:'feng',p:1},
+   b:{t:'还是我先发条消息吧',k:'shui',p:0}},
+  {q:'你俩对一件重要的事意见不合。',
+   a:{t:'摆事实讲道理，说到他认',k:'zhi',p:1},
+   b:{t:'算了，不差这一件',k:'shui',p:0}},
+  {q:'他很久没主动找你了。',
+   a:{t:'直接问，你是不是不太想理我',k:'huo',p:1},
+   b:{t:'不问，自己慢慢消化',k:'feng',p:0}},
+  {q:'朋友说他看着不太上心。',
+   a:{t:'我回去慢慢跟他说，他会改的',k:'shui',p:1},
+   b:{t:'我心里有数，不用说破',k:'zhi',p:0}},
+  {q:'他半夜发消息说想你了。',
+   a:{t:'明天再说吧，我要睡了',k:'feng',p:1},
+   b:{t:'立刻回他，我也想你',k:'huo',p:0}},
+  {q:'你俩对未来的规划不一样。',
+   a:{t:'坐下来把各自的想法摊开谈清楚',k:'zhi',p:1},
+   b:{t:'先不提，走一步看一步',k:'feng',p:0}},
+  {q:'他当着朋友的面驳了你一句。',
+   a:{t:'当时笑着圆过去，回家才跟他算',k:'huo',p:0},
+   b:{t:'事后慢慢跟他讲清楚我的底线',k:'shui',p:1}},
+  {q:'他提出一个让你有点为难的要求。',
+   a:{t:'我会答应，但会把话说在前面',k:'shui',p:1},
+   b:{t:'不拒绝也不解释，自己想办法',k:'feng',p:0}},
+  {q:'你想让他多陪你一点。',
+   a:{t:'直接说，我想要你多陪我',k:'huo',p:1},
+   b:{t:'不说，看他会不会自己想到',k:'zhi',p:0}}
+];
+
+const STYLE_ORDER = ['zhi','huo','shui','feng'];
+
+const TYPES = {
+  high_zhi:{tier:'上风',name:'执棋者',icon:'🎩',bg:'linear-gradient(150deg,#7E6BB8,#4F3F82)',
+    tag:'你走一步，看三步',
+    core:'你从不情绪化出手。关系里的分寸、退路和底牌，你心里都有一本账，只是不说。',
+    traits:['看得清，也忍得住','你不吵，但事情会按你的方向走','极少失控'],
+    need:'你需要的，是一个<b>不用你算</b>的人。'},
+  high_huo:{tier:'上风',name:'破局者',icon:'🔥',bg:'linear-gradient(150deg,#E8785A,#B84430)',
+    tag:'你不憋着，也不让人憋着',
+    core:'有问题你当场就要说开。你的热度本身就是力量，这段关系是被你推着往前走的。',
+    traits:['直接，不绕弯','情绪来得快去得也快','不怕先开口，也不怕把话说重'],
+    need:'你需要的，是一个<b>接得住你热度</b>的人。'},
+  high_shui:{tier:'上风',name:'主心骨',icon:'🌊',bg:'linear-gradient(150deg,#5AA6C8,#2F6E92)',
+    tag:'你是这段关系的定海针',
+    core:'你软着来，但最后常常按你说的办。让步不是输，是你知道什么值得争。',
+    traits:['温柔，但有底线','会照顾人，也会照顾局面','不翻脸，但会让人明白'],
+    need:'你需要的，是一个<b>看得见你让步</b>的人。'},
+  high_feng:{tier:'上风',name:'游刃者',icon:'🍃',bg:'linear-gradient(150deg,#6FAE8B,#3D7A5A)',
+    tag:'你进了这段关系，也没丢自己',
+    core:'你可以很近，也可以抽身。你不靠对方定自己的心情，这份自持就是你的位置。',
+    traits:['有自己的节奏和生活','不查岗，不纠缠','爱得清醒，退得也利索'],
+    need:'你需要的，是一个<b>不把你抓紧</b>的人。'},
+
+  mid_zhi:{tier:'平手',name:'对弈人',icon:'♟️',bg:'linear-gradient(150deg,#8C86C4,#5C559A)',
+    tag:'棋逢对手，谁也不让',
+    core:'你们势均力敌，谁也不肯先示弱。你把关系当博弈，其实是在等他先证明在意。',
+    traits:['讲道理，讲公平','不轻易低头，但舍不得走','心里算得很清楚'],
+    need:'你需要的，是<b>有人先放下棋盘</b>。'},
+  mid_huo:{tier:'平手',name:'双焰',icon:'🕯️',bg:'linear-gradient(150deg,#EE9A62,#C0603A)',
+    tag:'两个都是火',
+    core:'你们烧得亮，也吵得凶。谁也不服谁，但谁也没想过真的走。',
+    traits:['爱得浓，吵得也真','脾气来去都快','和好只需要一顿饭'],
+    need:'你需要的，是一个<b>吵完还愿意抱你</b>的人。'},
+  mid_shui:{tier:'平手',name:'同行者',icon:'🤝',bg:'linear-gradient(150deg,#63B0A6,#2F7C74)',
+    tag:'各走各路，手一直牵着',
+    core:'你们不黏，也不散。你懂得给关系留出呼吸的空，所以它一直活着。',
+    traits:['稳定，不折腾','有事好商量','先想「我们」，再想「我」'],
+    need:'你需要的，是一个<b>也愿意商量</b>的人。'},
+  mid_feng:{tier:'平手',name:'并肩的旅人',icon:'🧭',bg:'linear-gradient(150deg,#7B9BC0,#44638C)',
+    tag:'有距离，但没走散',
+    core:'你们各自完整，只是顺路走一段很长的路。你不索取，也不依附。',
+    traits:['独立，好相处','不吵架，也不说太深','分开也能过，但选了在一起'],
+    need:'你需要的，是<b>偶尔也把心里话说出口</b>。'},
+
+  low_zhi:{tier:'下风',name:'守局的人',icon:'🕰️',bg:'linear-gradient(150deg,#8B7FA0,#574C6E)',
+    tag:'你什么都看得清，就是不说破',
+    core:'你比谁都明白这段关系的底细，可你选择按兵不动。清醒有时是最累的处境。',
+    traits:['看得透，忍得住','怕说破了就没了','一直在等对方先动'],
+    need:'你需要的，是一次<b>把话说完</b>的机会。'},
+  low_huo:{tier:'下风',name:'全给的人',icon:'💌',bg:'linear-gradient(150deg,#D96A87,#9E3E5A)',
+    tag:'你爱的方式是把整颗心推过去',
+    core:'你不计算、不留退路，先把最好的给出去。你怕的不是付出，是没人接。',
+    traits:['热烈，毫不保留','情绪都写在脸上','付出后容易被忽略'],
+    need:'你需要的，是一个<b>把你的好记在心里</b>的人。'},
+  low_shui:{tier:'下风',name:'港湾',icon:'⚓',bg:'linear-gradient(150deg,#5E93B8,#33627F)',
+    tag:'他累了才想起回来',
+    core:'你总是在等、在接、在原谅。你的温柔撑住了这段关系，却常常撑不住自己。',
+    traits:['包容，几乎不拒绝','委屈自己消化','你一退再退'],
+    need:'你需要的，是有人问你一句<b>累不累</b>。'},
+  low_feng:{tier:'下风',name:'退一步的人',icon:'🌙',bg:'linear-gradient(150deg,#6E7B96,#3F4A63)',
+    tag:'你怕被丢下，所以先退',
+    core:'你用疏离保护自己，遇事先把心收回来。看起来不在乎，其实在意得很。',
+    traits:['不主动，也不追问','用冷淡掩饰在意','一旦确认被爱，会非常深'],
+    need:'你需要的，是一个<b>会主动来找你</b>的人。'}
+};
+
+const REPORTS = {
+  high_zhi:{
+    why:'你很早就学会了一件事：情绪不能解决问题，算清楚才能。所以你习惯把关系放进理智的框架里评估——这个人值不值得、这一步走出去会怎样。你不是不爱，是先保证自己不会输。',
+    signals:['遇事先想后果，再决定要不要开口','从不在气头上做决定','对方的态度变化，你比他自己还先发现'],
+    move:['偶尔让他看见你没算过的那一面','把「我在意」直接说出口，不用策略代替表达','允许一件事没有最优解'],
+    fit:'适合你的是一个同样清醒、但愿意先示弱的人——他不跟你抢方向盘，只会帮你把手松开。'},
+  high_huo:{
+    why:'你受不了猜。有情绪就要说出来，有问题就要当场解决。这股劲儿让你在这段关系里很有存在感，也会让对方觉得一直被推着走。',
+    signals:['有话当场说，不过夜','情绪来得快，去得也快','吵完常常忘了当初为什么吵'],
+    move:['最激烈的时候先停十秒再开口','把「我需要」说完整，别只说「你不对」','给对方一点反应的时间'],
+    fit:'适合你的是一个情绪稳、接得住你火的人——他不怕你吵，也不跟你对吵。'},
+  high_shui:{
+    why:'你懂得用软的方式达到目的。你不争一时，但事情会慢慢走到你要的方向。你的温柔里带着判断，只是很少有人看出来。',
+    signals:['先安抚情绪，再谈事情','用「我们」开头谈条件','退一步是有意的，不是没脾气'],
+    move:['偶尔也让对方知道你让了步','想要什么直接说，别总用引导','允许自己不必总稳住局面'],
+    fit:'适合你的是一个能看穿你温柔底下的坚定、并且尊重它的人。'},
+  high_feng:{
+    why:'你没有把全部的自己交出去，所以你能一直从容。你不靠对方确认自己的价值，这让你进退都好看。',
+    signals:['有自己的节奏，不会为他全盘打乱','不查岗，不追问','能抽身，也能回来'],
+    move:['偶尔让他知道你也会在意','给「我需要你」这句话留一个出口','别让独立变成别人不敢靠近的墙'],
+    fit:'适合你的是一个同样自足的人——你们各自完整，凑在一起只是更好。'},
+
+  mid_zhi:{
+    why:'你们势均力敌，谁也不肯先低头。你把关系当博弈，其实是在等他先证明在意——你在意，但你不想承认自己在意。',
+    signals:['讲公平，讲对错','心里有「谁先低头谁就输了」的念头','算得很清楚，嘴上不说'],
+    move:['先低一次头，看看会发生什么','把「我在意」从策略里拿出来','有些事不值得分对错'],
+    fit:'适合你的是一个愿意先放下棋盘的人——他先低头，你才敢松手。'},
+  mid_huo:{
+    why:'你们都是火，烧得亮也吵得凶。关系靠热度维持，也常被热度消耗。但你们吵得再狠，也从没想过真的走。',
+    signals:['一点就着，也一秒就和好','情绪都在明面上','和好通常只需要一顿饭'],
+    move:['吵到一半停一下，问一句「你到底想说什么」','把「我不想失去你」说出口','别把冷战当武器'],
+    fit:'适合你的，其实是对方学会在你发火时先抱住你，而不是先反驳。'},
+  mid_shui:{
+    why:'你们不黏也不散。你懂得给关系留出呼吸的空，所以它一直活着。你不追求戏剧性，你追求的是长久。',
+    signals:['有事好商量，不硬碰','先想「我们」，再想「我」','稳定得让人放心'],
+    move:['偶尔说点没用的、不解决任何问题的心里话','别把相处过成合作','允许关系里有一点失控'],
+    fit:'适合你的是一个也愿意商量、并且偶尔会主动的人。'},
+  mid_feng:{
+    why:'你们各自完整，只是顺路走一段很长的路。你不索取也不依附，这让你很轻松，也让关系少了点浓度。',
+    signals:['独立，好相处','不吵架，也很少说太深','分开也能过，但选了在一起'],
+    move:['偶尔示弱一次，让他有机会照顾你','把藏着的期待说出来','给关系一次变深的机会'],
+    fit:'适合你的是一个也有自己的世界、但愿意偶尔走进来的人。'},
+
+  low_zhi:{
+    why:'你什么都看得清，就是不说破。你比谁都明白这段关系的底细，可你选择按兵不动——因为你怕说破了就真的没了。清醒有时候是最累的处境。',
+    signals:['看得透，但忍住不说','怕一开口就失去','一直在等他先动'],
+    move:['挑一件小事，把真实感受说出来试试','承认自己的需求不是过分','允许关系承受一次真话'],
+    fit:'适合你的是一个值得你把话说开的人——如果他听完就走，那你本来也留不住他。'},
+  low_huo:{
+    why:'你爱的方式是把整颗心先推过去。你不计算、不留退路，总先把最好的给出去。你怕的不是付出，是付出之后没人接。',
+    signals:['毫不保留，先给再说','情绪都写在脸上','越好，越容易被当成理所当然'],
+    move:['付出之前先问自己一句「我愿意吗」','把你的需要说出来，而不是等他发现','留一点给自己'],
+    fit:'适合你的是一个会把你的好记在心里、并且当面说出来的的人。'},
+  low_shui:{
+    why:'你总是在等、在接、在原谅。你的温柔撑住了这段关系，却常常撑不住自己。别人在你这里充电，你的电却没人充。',
+    signals:['几乎不拒绝','委屈自己消化','一退再退，退到快没有底线'],
+    move:['练习说「这次我不行」','把底线写下来，然后说出口','接受「让他暂时失望」是安全的'],
+    fit:'适合你的是一个懂得反过来照顾你的人——关系不该只有你在撑。'},
+  low_feng:{
+    why:'你用疏离保护自己。遇事先把心收回来，看起来不在乎，其实在意得很。你不是不想靠近，是怕靠近之后被丢下。',
+    signals:['不主动，也不追问','用冷淡掩饰在意','一旦确认被爱，会非常深'],
+    move:['主动一次，看看会怎么样','把「其实我在等你」说出口','把沉默换成一句真话'],
+    fit:'适合你的是一个有耐心、会主动来找你的人——他多走一步，你才敢上前。'}
+};
+
+let idx = 0;
+let score = 0;
+let styles = {zhi:0,huo:0,shui:0,feng:0};
+
+const $ = (id) => document.getElementById(id);
+const show = (id) => {
+  ['s-cover','s-q','s-result'].forEach(s => $(s).classList.toggle('active', s === id));
+};
+const toast = (msg) => {
+  const t = $('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._tid);
+  t._tid = setTimeout(() => t.classList.remove('show'), 2200);
+};
+
+function reset(){
+  idx = 0; score = 0;
+  styles = {zhi:0,huo:0,shui:0,feng:0};
+}
+
+function renderQ(){
+  const item = QUESTIONS[idx];
+  $('q-idx').textContent = String(idx+1).padStart(2,'0') + ' / ' + QUESTIONS.length;
+  $('q-bar').style.width = (idx/QUESTIONS.length*100) + '%';
+  $('q-text').textContent = item.q;
+  const box = $('q-opts');
+  box.innerHTML = '';
+  [item.a, item.b].forEach(opt => {
+    const b = document.createElement('button');
+    b.className = 'opt';
+    b.type = 'button';
+    b.textContent = opt.t;
+    b.addEventListener('click', () => choose(opt));
+    box.appendChild(b);
+  });
+}
+
+function choose(opt){
+  score += opt.p;
+  styles[opt.k] += 1;
+  idx += 1;
+  if (idx >= QUESTIONS.length) finish();
+  else renderQ();
+}
+
+function tierOf(s){
+  if (s >= 8) return 'high';
+  if (s <= 4) return 'low';
+  return 'mid';
+}
+
+function styleOf(c){
+  let best = STYLE_ORDER[0];
+  for (const k of STYLE_ORDER) if (c[k] > c[best]) best = k;
+  return best;
+}
+
+function finish(){
+  const key = tierOf(score) + '_' + styleOf(styles);
+  const t = TYPES[key] || TYPES.mid_shui;
+  $('card').style.background = t.bg;
+  $('r-badge').textContent = t.tier;
+  $('r-icon').textContent = t.icon;
+  $('r-name').textContent = t.name;
+  $('r-tag').textContent = t.tag;
+  $('r-core').textContent = t.core;
+  const ul = $('r-traits');
+  ul.innerHTML = '';
+  t.traits.forEach(x => {
+    const li = document.createElement('li');
+    li.textContent = x;
+    ul.appendChild(li);
+  });
+  $('r-need').innerHTML = t.need;
+
+  const rp = REPORTS[key] || REPORTS.mid_shui;
+  $('rp-why').textContent = rp.why;
+  $('rp-fit').textContent = rp.fit;
+  const list = (el, arr) => {
+    el.innerHTML = '';
+    arr.forEach(x => {
+      const li = document.createElement('li');
+      li.textContent = x;
+      el.appendChild(li);
+    });
+  };
+  list($('rp-signals'), rp.signals);
+  list($('rp-move'), rp.move);
+
+  show('s-result');
+  window.scrollTo(0, 0);
+}
+
+$('start').addEventListener('click', () => { reset(); renderQ(); show('s-q'); });
+$('again').addEventListener('click', () => { reset(); show('s-cover'); window.scrollTo(0, 0); });
+</script>
+</body>
+</html>
