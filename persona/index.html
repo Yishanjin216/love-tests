@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>你在感情里的隐藏人格</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{margin:0;padding:0;}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:linear-gradient(180deg,#FDF7F3 0%,#F6E9EE 60%,#F2E3EA 100%);
+  min-height:100vh;color:#3A3230;
+  display:flex;align-items:center;justify-content:center;
+  padding:24px 18px;
+}
+#app{width:100%;max-width:400px;}
+.screen{display:none;animation:fade .35s ease;}
+.screen.active{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+.cover{text-align:center;padding:36px 8px 24px;}
+.cover .kicker{font-size:12px;letter-spacing:3px;color:#B79AA6;margin-bottom:18px;}
+.cover h1{font-family:"Songti SC",Georgia,serif;font-size:29px;line-height:1.5;margin:0 0 14px;font-weight:600;color:#4A3B41;}
+.cover p{font-size:13px;color:#8E7A84;line-height:1.9;margin:0 0 32px;}
+
+.btn{
+  display:block;width:100%;border:none;border-radius:999px;
+  padding:16px;font-size:16px;font-weight:500;color:#fff;
+  background:linear-gradient(135deg,#D89AAE,#B07E96);
+  box-shadow:0 8px 20px rgba(176,126,150,.28);
+  cursor:pointer;font-family:inherit;transition:transform .15s ease;
+}
+.btn:active{transform:scale(.97)}
+.meta{margin-top:14px;font-size:11px;color:#B0A0A8;letter-spacing:.5px;}
+
+.q-head{display:flex;justify-content:space-between;font-size:12px;color:#A8969E;margin-bottom:10px;}
+.bar{height:4px;background:#EFE2E8;border-radius:99px;overflow:hidden;margin-bottom:34px;}
+.bar span{display:block;height:100%;width:0;background:linear-gradient(90deg,#E0AFC0,#B07E96);border-radius:99px;transition:width .3s ease;}
+.q-text{font-family:"Songti SC",Georgia,serif;font-size:21px;line-height:1.65;margin:0 0 30px;color:#40353A;}
+.opt{
+  display:block;width:100%;text-align:left;border:1px solid #EBDCE3;background:#fff;
+  border-radius:18px;padding:18px 20px;font-size:15px;line-height:1.6;color:#4A3D43;
+  margin-bottom:14px;cursor:pointer;font-family:inherit;
+  box-shadow:0 2px 10px rgba(180,150,165,.07);transition:all .16s ease;
+}
+.opt:active{transform:scale(.985);border-color:#D9B4C4;background:#FFFBFD;}
+
+.card{
+  border-radius:24px;padding:34px 26px 26px;color:#fff;
+  box-shadow:0 14px 34px rgba(120,90,110,.22);
+  position:relative;overflow:hidden;
+  min-height:540px;display:flex;flex-direction:column;
+}
+.card:before{content:"";position:absolute;left:-20%;right:-20%;top:-70px;height:180px;background:rgba(255,255,255,.13);transform:rotate(-7deg);}
+.card .icon{font-size:34px;margin-bottom:14px;position:relative;}
+.card .tname{font-family:"Songti SC",Georgia,serif;font-size:30px;font-weight:600;letter-spacing:2px;margin:0 0 8px;position:relative;}
+.card .tag{font-size:13px;opacity:.9;letter-spacing:1px;margin-bottom:22px;position:relative;}
+.card .core{font-size:14px;line-height:1.95;opacity:.96;padding:16px 0;border-top:1px solid rgba(255,255,255,.28);border-bottom:1px solid rgba(255,255,255,.28);margin-bottom:20px;position:relative;}
+.card .traits{list-style:none;padding:0;margin:0 0 22px;position:relative;}
+.card .traits li{font-size:13.5px;line-height:2.05;opacity:.95;}
+.card .traits li:before{content:"·";margin-right:10px;opacity:.7;}
+.card .need{font-size:13.5px;line-height:1.9;opacity:.96;position:relative;margin-top:auto;}
+.card .need b{font-weight:600;}
+.card .wm{position:absolute;right:24px;bottom:18px;font-size:10px;opacity:.55;letter-spacing:1px;}
+
+.hint{font-size:11.5px;color:#A8969E;text-align:center;margin:14px 0 22px;letter-spacing:.5px;}
+.cta-box{background:#fff;border-radius:20px;padding:22px;box-shadow:0 6px 22px rgba(180,150,165,.10);}
+.cta-box h3{margin:0 0 10px;font-size:15px;color:#4A3B41;font-weight:600;}
+.cta-box ul{list-style:none;padding:0;margin:0 0 18px;}
+.cta-box li{font-size:12.5px;line-height:2;color:#8E7A84;}
+.cta-box li:before{content:"—";margin-right:8px;color:#D2BCC7;}
+.ghost{display:block;width:100%;text-align:center;background:none;border:none;color:#A8969E;font-size:13px;padding:16px 0 0;cursor:pointer;font-family:inherit;}
+.toast{
+  position:fixed;left:50%;bottom:40px;transform:translate(-50%,16px);
+  background:rgba(58,50,48,.92);color:#fff;font-size:13px;line-height:1.6;
+  padding:12px 20px;border-radius:14px;opacity:0;pointer-events:none;
+  transition:all .25s ease;max-width:80vw;text-align:center;z-index:9;
+}
+.toast.show{opacity:1;transform:translate(-50%,0);}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <section id="s-cover" class="screen active">
+    <div class="cover">
+      <div class="kicker">HIDDEN PERSONA</div>
+      <h1>你在感情里的<br>隐藏人格</h1>
+      <p>你没说出口的那部分，<br>其实一直在替你做选择。</p>
+      <button class="btn" id="start">开始测试</button>
+      <div class="meta">12 题 · 约 1 分钟</div>
+    </div>
+  </section>
+
+  <section id="s-q" class="screen">
+    <div class="q-head"><span id="q-idx">01 / 12</span><span>凭直觉选</span></div>
+    <div class="bar"><span id="q-bar"></span></div>
+    <h2 class="q-text" id="q-text"></h2>
+    <div id="q-opts"></div>
+  </section>
+
+  <section id="s-result" class="screen">
+    <div class="card" id="card">
+      <div class="icon" id="r-icon"></div>
+      <h2 class="tname" id="r-name"></h2>
+      <div class="tag" id="r-tag"></div>
+      <div class="core" id="r-core"></div>
+      <ul class="traits" id="r-traits"></ul>
+      <div class="need" id="r-need"></div>
+      <div class="wm">感情隐藏人格测试</div>
+    </div>
+    <div class="hint">截图保存，它就是你的结果卡</div>
+    <div class="cta-box">
+      <h3>完整报告 · ¥0.9</h3>
+      <ul>
+        <li>你的依恋类型判定</li>
+        <li>关系里的 3 个隐藏雷区</li>
+        <li>最适合你的沟通方式</li>
+        <li>你的关系高光期与低谷期</li>
+      </ul>
+      <button class="btn" id="buy">解锁完整报告</button>
+      <button class="ghost" id="again">重新测一次</button>
+    </div>
+  </section>
+
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const QUESTIONS = [
+  {q:'他隔了两小时才回你消息，你第一反应是——',
+   a:{t:'大概在忙，我先忙我的',k:'wolf'}, b:{t:'我是不是哪句说错了',k:'glass'}},
+  {q:'独处一整天，你的感觉是——',
+   a:{t:'很舒服，最好别有人打扰',k:'whale'}, b:{t:'到傍晚会想找个人说说话',k:'lamp'}},
+  {q:'朋友心情不好，你会——',
+   a:{t:'想立刻做点什么让她好起来',k:'lamp'}, b:{t:'帮她把事理清楚，讲道理',k:'wolf'}},
+  {q:'你更难说出口的那句话是——',
+   a:{t:'「对不起」',k:'glass'}, b:{t:'「我需要你」',k:'whale'}},
+  {q:'一段关系里你最怕——',
+   a:{t:'被套牢，失去自己的节奏',k:'wolf'}, b:{t:'我付出的一切没被看见',k:'lamp'}},
+  {q:'深夜你更常回头看的是——',
+   a:{t:'那些没说出口的话',k:'whale'}, b:{t:'那些没被接住的委屈',k:'glass'}},
+  {q:'别人突然夸你，你会——',
+   a:{t:'先想「我得回点什么」',k:'lamp'}, b:{t:'先想「他为什么突然夸我」',k:'whale'}},
+  {q:'你生气的时候——',
+   a:{t:'先红眼眶，说不出话',k:'glass'}, b:{t:'沉默，把自己关起来',k:'wolf'}},
+  {q:'你更认同哪句——',
+   a:{t:'靠谁都不如靠自己',k:'wolf'}, b:{t:'我不太敢麻烦别人',k:'glass'}},
+  {q:'你喜欢上一个人时——',
+   a:{t:'不动声色，先观察很久',k:'whale'}, b:{t:'忍不住对他好，什么都想给',k:'lamp'}},
+  {q:'关系里你更常做的——',
+   a:{t:'主动找话题、照顾情绪',k:'lamp'}, b:{t:'退一步，等他先开口',k:'wolf'}},
+  {q:'如果只能留一个词形容你——',
+   a:{t:'敏感',k:'glass'}, b:{t:'深',k:'whale'}}
+];
+
+const TYPES = {
+  whale:{name:'深海鲸',icon:'🐋',bg:'linear-gradient(150deg,#6E93BC,#42658C)',
+    tag:'你把话都沉在海底',
+    core:'话要在心里过三遍才出口。不是冷，是深——你先确认这段关系接得住你，才肯浮上来。',
+    traits:['慢热，但一旦认定就极深','看人准，比说出来的多得多','情绪自己消化，很少麻烦别人'],
+    need:'你最需要的，是一个<b>愿意等你说完</b>的人。'},
+  lamp:{name:'暖灯',icon:'🕯️',bg:'linear-gradient(150deg,#EFB377,#D2884A)',
+    tag:'你总是先照亮别人',
+    core:'你习惯了先照顾别人的情绪，自己的累放在最后。别人觉得你没脾气，其实你只是不舍得。',
+    traits:['体贴，会读空气，先想别人','不擅长拒绝，容易被当成理所当然','付出后不邀功，但期待被记得'],
+    need:'你最需要的，是<b>有人反过来问你累不累</b>。'},
+  glass:{name:'琉璃',icon:'🔮',bg:'linear-gradient(150deg,#B695D6,#8A63B0)',
+    tag:'你透明，也容易碎',
+    core:'感受太细，别人一句话你能听出三层意思。你记得住所有的好，也记得住所有的刺。',
+    traits:['共情强，别人难过你比她还沉','记性很好，尤其记疼的那些','需要反复确认，怕被误解'],
+    need:'你最需要的，是一个<b>说话不用你猜</b>的人。'},
+  wolf:{name:'荒原狼',icon:'🐺',bg:'linear-gradient(150deg,#9A876F,#6E5E49)',
+    tag:'你不轻易让人靠近',
+    core:'独立是你的铠甲，也是你的墙。你嘴硬心软，退一步不是不在乎，是怕先低头就输了。',
+    traits:['边界感强，讨厌被安排','嘴硬心软，关心都用行动','忠诚但不说，等着被读懂'],
+    need:'你最需要的，是一个<b>不追问、但一直在</b>的人。'}
+};
+
+const ORDER = ['whale','lamp','glass','wolf'];
+let idx = 0;
+let scores = {whale:0,lamp:0,glass:0,wolf:0};
+
+const $ = (id) => document.getElementById(id);
+const show = (id) => {
+  ['s-cover','s-q','s-result'].forEach(s => $(s).classList.toggle('active', s === id));
+};
+const toast = (msg) => {
+  const t = $('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._tid);
+  t._tid = setTimeout(() => t.classList.remove('show'), 2200);
+};
+
+function reset(){
+  idx = 0;
+  scores = {whale:0,lamp:0,glass:0,wolf:0};
+}
+
+function renderQ(){
+  const item = QUESTIONS[idx];
+  $('q-idx').textContent = String(idx+1).padStart(2,'0') + ' / ' + QUESTIONS.length;
+  $('q-bar').style.width = ((idx)/QUESTIONS.length*100) + '%';
+  $('q-text').textContent = item.q;
+  const box = $('q-opts');
+  box.innerHTML = '';
+  [item.a, item.b].forEach(opt => {
+    const b = document.createElement('button');
+    b.className = 'opt';
+    b.type = 'button';
+    b.textContent = opt.t;
+    b.addEventListener('click', () => choose(opt.k));
+    box.appendChild(b);
+  });
+}
+
+function choose(k){
+  scores[k] += 1;
+  idx += 1;
+  if (idx >= QUESTIONS.length) finish();
+  else renderQ();
+}
+
+function finish(){
+  let best = ORDER[0];
+  for (const k of ORDER) if (scores[k] > scores[best]) best = k;
+  const t = TYPES[best];
+  $('card').style.background = t.bg;
+  $('r-icon').textContent = t.icon;
+  $('r-name').textContent = t.name;
+  $('r-tag').textContent = t.tag;
+  $('r-core').textContent = t.core;
+  const ul = $('r-traits');
+  ul.innerHTML = '';
+  t.traits.forEach(x => {
+    const li = document.createElement('li');
+    li.textContent = x;
+    ul.appendChild(li);
+  });
+  $('r-need').innerHTML = t.need;
+  show('s-result');
+}
+
+$('start').addEventListener('click', () => { reset(); renderQ(); show('s-q'); });
+$('again').addEventListener('click', () => { reset(); show('s-cover'); });
+$('buy').addEventListener('click', () => toast('完整报告上线后，这里会跳到橱窗'));
+</script>
+</body>
+</html>
